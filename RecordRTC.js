@@ -5296,6 +5296,7 @@ function MultiStreamsMixer(arrayOfMediaStreams, elementClass) {
         }
 
         streams.forEach(function(stream) {
+            arrayOfMediaStreams.push(newStream);
             var newStream = new MediaStream();
 
             if (stream.getTracks().filter(function(t) {
@@ -5314,7 +5315,7 @@ function MultiStreamsMixer(arrayOfMediaStreams, elementClass) {
                     return t.kind === 'audio';
                 }).length) {
                 var audioSource = self.audioContext.createMediaStreamSource(stream);
-                self.audioDestination = self.audioContext.createMediaStreamDestination();
+                // self.audioDestination = self.audioContext.createMediaStreamDestination();
                 audioSource.connect(self.audioDestination);
 
                 newStream.addTrack(self.audioDestination.stream.getTracks().filter(function(t) {
@@ -5322,7 +5323,6 @@ function MultiStreamsMixer(arrayOfMediaStreams, elementClass) {
                 })[0]);
             }
 
-            arrayOfMediaStreams.push(newStream);
         });
     };
 
